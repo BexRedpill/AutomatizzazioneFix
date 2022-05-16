@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://JAVA.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+<session-config>
+    <session-timeout>240</session-timeout>
+</session-config>
+  
+<welcome-file-list>
+    <welcome-file>it/thera/thip/base/profilo/Login.jsp</welcome-file>
+</welcome-file-list>
+  
+ <servlet>
+   <display-name>CustomInvoker</display-name>
+   <servlet-name>CustomInvoker</servlet-name>
+   <servlet-class>com.thera.thermfw.web.servlet.InvokerServlet</servlet-class>
+   <init-param>
+     <param-name>debug</param-name>
+     <param-value>0</param-value>
+   </init-param>
+   <load-on-startup>1</load-on-startup>
+ </servlet>
+ 
+ <servlet-mapping>
+   <servlet-name>CustomInvoker</servlet-name>
+   <url-pattern>/servlet/*</url-pattern>
+ </servlet-mapping>
+
+ <servlet>
+   <servlet-name>Initializer</servlet-name>
+   <servlet-class>com.thera.thermfw.web.servlet.InitServlet</servlet-class>
+   <load-on-startup>50</load-on-startup>
+ </servlet>
+ <servlet>
+  <servlet-name>ws</servlet-name>
+   <servlet-class>it.thera.thip.ws.servlet.WebServiceLauncher</servlet-class>
+ </servlet>
+ <servlet-mapping>
+   <servlet-name>ws</servlet-name>
+   <url-pattern>/ws</url-pattern>
+ </servlet-mapping>
+
+<servlet>
+	<servlet-name>PantheraFinance</servlet-name>
+	<servlet-class>it.thera.thip.plexweb.servlet.PlexServlet</servlet-class>
+	<load-on-startup>3</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>PantheraFinance</servlet-name>
+	<url-pattern>/servlet/it.thera.thip.plexweb.servlet.PlexServlet/*</url-pattern>
+</servlet-mapping>
+
+<servlet>
+	<servlet-name>PlexResourceServlet</servlet-name>
+	<servlet-class>com.thera.thermfw.plexweb.servlet.ResourceServlet</servlet-class>
+	<load-on-startup>4</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>PlexResourceServlet</servlet-name>
+	<url-pattern>/servlet/com.thera.thermfw.plexweb.servlet.ResourceServlet/*</url-pattern>
+</servlet-mapping>
+
+<servlet>
+        <servlet-name>REST</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>it.thera.thip.api.PantheraRestApplication</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>REST</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+</servlet-mapping>
+
+ <filter>
+   <filter-name>PTHFilter</filter-name>
+   <filter-class>it.thera.thip.ws.PTHFilter</filter-class>
+ </filter>
+ <filter-mapping>
+   <filter-name>PTHFilter</filter-name>
+   <url-pattern>/*</url-pattern>
+ </filter-mapping>  
+ 
+ <filter>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+        <init-param>
+            <param-name>logLevel</param-name>
+            <param-value>WARN</param-value>
+        </init-param>
+        <init-param>
+            <param-name>confPath</param-name>
+            <param-value>/urlrewrite/urlrewrite.xml</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+</filter-mapping> 
+
+ 
+ 	 <welcome-file-list>
+        <welcome-file>it/thera/thip/base/profilo/Login.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+ 
+</web-app>
